@@ -1,30 +1,52 @@
-const price = document.querySelector('#price');
-const people = document.querySelector('#people');
-const tip = document.querySelector('#tip');
-const error = document.querySelector('.error');
-const countBtn = document.querySelector('.count');
-const costInfo = document.querySelector('.cost-info');
-const cost = document.querySelector('.cost');
+const incomeSection = document.querySelector('.income-area');
+const expensesSection = document.querySelector('.expenses-area');
+const availableMoney = document.querySelector('.available-money');
+const addTransactionPanel = document.querySelector('.add-transaction-panel');
 
-const showBill = () => {
-	if (price.value == '' || people.value == '' || tip.value == 0) {
-		error.textContent = 'Please fill required fields.';
-		costInfo.style.display = 'none';
+const nameInput = document.querySelector('#name');
+const amountInput = document.querySelector('#amount');
+const categorySelect = document.querySelector('#category');
+
+const addTransactionBtn = document.querySelector('.add-transaction');
+const saveBtn = document.querySelector('.save');
+const cancelBtn = document.querySelector('.cancel');
+const deleteAllBtn = document.querySelector('.delete-all');
+
+const lightStyleBtn = document.querySelector('.light');
+const darkStyleBtn = document.querySelector('.dark');
+
+let root = document.documentElement;
+let ID = 0;
+let categoryIcon;
+let selectedCategory;
+let moneyArr = [0];
+
+const showPanel = () => {
+	addTransactionPanel.style.display = 'flex';
+};
+
+const closePanel = () => {
+	addTransactionPanel.style.display = 'none';
+	clearInputs();
+};
+
+const checkForm = () => {
+	if (
+		nameInput.value !== '' &&
+		amountInput.value !== '' &&
+		categorySelect.value !== 'none'
+	) {
+		console.log('ok');
 	} else {
-		error.textContent = '';
-		countBill();
+		alert('Wypełnij wszystkie pola!');
 	}
 };
 
-const countBill = () => {
-	const newPrice = parseFloat(price.value);
-	const newPeople = parseInt(people.value);
-	const newTip = parseFloat(tip.value);
-    const sum = (newPrice + (newPrice * newTip)) / newPeople;
-	
-    costInfo.style.display = 'block';
-
-	cost.textContent = sum.toFixed(2);
+const clearInputs = () => {
+	nameInput.value = '';
+	amountInput.value = '';
+	categorySelect.selectedIndex = 0;
 };
 
-countBtn.addEventListener('click', showBill);
+addTransactionBtn.addEventListener('click', showPanel);
+cancelBtn.addEventListener('click', closePanel);
